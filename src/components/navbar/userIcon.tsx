@@ -11,17 +11,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseSignOut } from "@/lib/actions/server";
 import { toast } from "sonner";
-import { getProfile } from "@/lib/actions/server";
+import { useQueries } from "@tanstack/react-query";
+import { getAvatarBlob, getProfileData } from "@/lib/actions/queries";
 
 const UserIcon = () => {
-  const [username, setUsername] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [email, setEmail] = useState("");
-
   const router = useRouter();
 
   const logout = async () => {
@@ -30,28 +26,31 @@ const UserIcon = () => {
     toast.success("Logout successful");
   };
 
-  useEffect(() => {
-    const profileData = async () => {
-      const { data } = await getProfile();
-      setAvatar(data?.avatar_url);
-      setUsername(data?.full_name);
-      setEmail(data?.email);
-    };
-    profileData();
-  }, []);
+  const [profileData, avatarData] = useQueries({
+    queries: [
+      { queryKey: ["profile"], queryFn: getProfileData },
+      { queryKey: ["avatar"], queryFn: getAvatarBlob, retry: false },
+    ],
+  });
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage referrerPolicy="no-referrer" src={avatar} />
-          <AvatarFallback>{username ? username[0] : "S"}</AvatarFallback>
+          <AvatarImage
+            src={avatarData.data && URL.createObjectURL(avatarData.data)}
+          />
+          <AvatarFallback>
+            {profileData?.data?.full_name
+              ? profileData?.data?.full_name[0]
+              : "S"}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="space-y-2 w-56 mr-4">
         <DropdownMenuLabel>
-          <p className="capitalize">{username}</p>
-          <p className="font-normal">{email}</p>
+          <p className="capitalize">{profileData?.data?.full_name}</p>
+          <p className="font-normal">{profileData?.data?.email}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

@@ -40,14 +40,3 @@ export async function supabaseSignOut() {
 }
 
 // ------------------------------------------ //
-
-// Get Profile function
-
-export async function getProfile() {
-  const supabase = await createSupabaseServerClient();
-  return await supabase
-    .from("profiles")
-    .select("full_name,avatar_url,email")
-    .limit(1)
-    .single();
-}

@@ -4,6 +4,7 @@ import { MaxWidthWrapper } from "@/components/MaxWidthWrapper";
 import "@/app/globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import TanstackProvider from "@/providers/TanStackProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className)}>
-        <MaxWidthWrapper>
-          <Toaster closeButton richColors position="top-right" />
-          {children}
-        </MaxWidthWrapper>
+        <TanstackProvider>
+          <MaxWidthWrapper>
+            <Toaster closeButton richColors position="top-right" />
+            {children}
+          </MaxWidthWrapper>
+        </TanstackProvider>
       </body>
     </html>
   );

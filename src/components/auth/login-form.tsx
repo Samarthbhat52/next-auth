@@ -38,7 +38,7 @@ export const LoginForm = () => {
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(async () => {
       const result = await signInWithEmailAndPassword(values);
-      const { data, error } = JSON.parse(result);
+      const { error } = JSON.parse(result);
 
       if (error?.message) {
         toast.error(error.message);

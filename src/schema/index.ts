@@ -29,3 +29,5 @@ export const RegisterSchema = z
     message: "Passwords did not match",
     path: ["confirm"],
   });
+
+export const AvatarChangeSchema = z.object({ avatarImg: z.any() });
