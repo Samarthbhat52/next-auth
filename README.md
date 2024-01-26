@@ -1,3 +1,5 @@
+**View this markdown file but pressing `cmd+shift+v` or `ctrl+shift+v`**
+
 ## Getting Started
 
 First, install the required packages:
@@ -5,12 +7,6 @@ First, install the required packages:
 ```bash
 npm install
 ```
-
-## Env variables setup
-
-- Replace the values in `.env.example` file with your supabase project's URL and ANON key values.
-
-- Rename the `.env.example` file to `.env.local`.
 
 ## Supabase setup
 
@@ -100,6 +96,12 @@ CREATE POLICY objects_delete_policy ON storage.objects FOR DELETE
 - Disable _"confirm email"_ option while enabling email provider.
 
 **_IMPORTANT:_** Google and Github auth requires additional set-up, follow their respective guides.
+
+## Env variables setup
+
+- Replace the values in `.env.example` file with your supabase project's URL and ANON key values.
+
+- Rename the `.env.example` file to `.env.local`.
 
 ## Running local server
 
