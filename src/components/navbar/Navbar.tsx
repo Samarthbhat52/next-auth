@@ -6,7 +6,7 @@ const Navbar = async () => {
   return (
     <nav className="h-16 px-2">
       <div className="flex h-full justify-between items-center">
-        <Link href="/">
+        <Link href="/" className="woah">
           <Image src="/vercel.svg" width={50} height={50} alt="logo" />
         </Link>
         <UserIcon />
